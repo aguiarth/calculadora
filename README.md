@@ -30,14 +30,14 @@ A calculadora suporta as seguintes funcionalidades:
 1. **Clonagem do Repositório**: Clone o repositório para sua máquina local.
 
    ```bash
-   git clone https://github.com/aguiarth/convertcalc.git
-   cd convertcalc
+   git clone https://github.com/aguiarth/calculadora.git
+   cd calculadora
    ```
 
 2. **Compilação do Código**: Compile o código utilizando um compilador C.
 
    ```bash
-   gcc -o calculadora conversor.c
+   gcc -o calculadora calculadora.c
    ```
 
 3. **Execução do Programa**: Execute o programa.
@@ -50,7 +50,7 @@ A calculadora suporta as seguintes funcionalidades:
 
 ## Estrutura do Projeto
 
-- `conversor.c`: Arquivo principal contendo a implementação das funcionalidades de conversão.
+- `calculadora.c`: Arquivo principal contendo a implementação das funcionalidades de conversão.
 - `README.md`: Documentação do projeto.
 
 ## Futuras Melhorias
