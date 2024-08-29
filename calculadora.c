@@ -77,21 +77,25 @@ void decimal_para_binario(int numero) {
     }
     
     // método da divisão - conversão decimal para binário
+    printf("Divisões sucessivas por 2:\n");
     while (numero > 0) {
         resto = numero % 2;
-        printf("Dividindo %d por 2: quociente = %d, resto = %d\n", numero, numero / 2, resto);
+        printf("%d dividido por 2 = %d, resto = %d\n", numero, numero / 2, resto);
         numero /= 2;
         binario[i++] = resto + '0'; // converter o valor numérico '0' ou '1' em ASCII para representação em string
     }
 
     // finalizar a string
     binario[i] = '\0';
-    printf("O resultado é o último quociente seguido dos restos - leitura invertida.\n");
+    printf("O resultado é a leitura invertida dos restos.\n");
     printf("Decimal %d na base 2: ", valorInicial);
 
     // resultado - inverter a string
     for (int j = i - 1; j >= 0; j--) {
         printf("%c", binario[j]);
+        if ((i - j) % 4 == 0 && j != 0) {
+            printf(" ");
+        }
     }
     printf("\n");
 
@@ -109,16 +113,17 @@ void decimal_para_octal(int numero) {
     }
     
     // método da divisão - conversão decimal para octal
+    printf("Divisões sucessivas por 8:\n");
     while (numero > 0) {
         resto = numero % 8;
-        printf("Dividindo %d por 8: quociente = %d, resto = %d\n", numero, numero / 8, resto);
+        printf("%d dividido por 8 = %d, resto = %d\n", numero, numero / 8, resto);
         numero /= 8;
         octal[i++] = resto + '0';
     }
 
     // finalizar a string
     octal[i] = '\0';
-    printf("O resultado é o último quociente seguido dos restos - leitura invertida.\n");
+    printf("O resultado é a leitura invertida dos restos.\n");
     printf("Decimal %d na base 8: ", valorInicial);
 
     // inverter a string
@@ -135,6 +140,8 @@ void decimal_para_hexadecimal(int numero) {
     char hexadecimal[9]; // Limite para inteiros de 32 bits (8 dígitos hexadecimais + 1 bit '/0')
     char caracteresHex[] = "0123456789ABCDEF"; // mapeamento de valores numéricos para caracteres hexadecimais
 
+    printf("A base hexadecimal possui 16 possibilidades de valores: 0123456789ABCDEF.\n");
+
     // decimal 0 = hexadecimal "0"
     if (numero == 0) {
         hexadecimal[i++] = '0';
@@ -143,9 +150,10 @@ void decimal_para_hexadecimal(int numero) {
     printf("Convertendo o decimal %d para hexadecimal:\n", valorInicial);
 
     // Método da divisão - conversão decimal para hexadecimal
+    printf("Divisões sucessivas por 2:\n");
     while (numero > 0) {
         resto = numero % 16;
-        printf("Dividindo %d por 16: quociente = %d, resto = %d (%c)\n", numero, numero / 16, resto, caracteresHex[resto]);
+        printf("%d dividido por 16 = %d, resto = %d (%c)\n", numero, numero / 16, resto, caracteresHex[resto]);
         numero /= 16;
         hexadecimal[i++] = caracteresHex[resto];
     }
@@ -154,10 +162,13 @@ void decimal_para_hexadecimal(int numero) {
     hexadecimal[i] = '\0';
 
     // Exibir o resultado final
-    printf("O resultado é o último quociente seguido dos restos - leitura invertida.\n");
+    printf("O resultado é a leitura invertida dos restos.\n");
     printf("Decimal %d na base hexadecimal: ", valorInicial);
     for (int j = i - 1; j >= 0; j--) {
         printf("%c", hexadecimal[j]);
+        if ((i - j) % 4 == 0 && j != 0) {
+            printf(" ");
+        }
     }
     printf("\n");
 }
