@@ -6,6 +6,8 @@ void decimal_para_octal(int numero);
 void decimal_para_hexadecimal(int numero);
 void decimal_para_bcd(int numero);
 void decimal_para_binario_16(int numero);
+// void decimal_para_float(float numero);
+// void decimal_para_double(double numero);
 
 int main(){
 
@@ -13,54 +15,95 @@ int main(){
 
     do {
         printf("Calculadora didática - conversão entre sistemas numéricos\n"
-                "====================\n"
+                "--------------------\n"
                 "Selecione a opção desejada:\n"
                 "1. Base 10 para bases 2, 8, 16 e código BCD (valores inteiros positivos)\n"
                 "2. Base 10 para base 2 com sinal com 16 bits - complemento a 2 (valores inteiros)\n"
                 "3. Base 10 para float e double (valores reais)\n"
                 "4. Sair\n");
-        scanf("%d", &opcao);
-        if (opcao < 1 || opcao > 4){
-                printf("Opção inválida. Tente novamente.\n");
-            }
-    } while (opcao < 1 || opcao > 4);
-    
-    if (opcao == 1){
-        int numero, opcao2;
-
-        do {
-            printf("Selecione a base do resultado:\n"
-                    "1. Binário\n"
-                    "2. Octal\n"
-                    "3. Hexadecimal\n"
-                    "4. Código BCD\n");
-            scanf("%d", &opcao2);
-            if (opcao2 < 1 || opcao2 > 4){
-                printf("Opção inválida. Tente novamente.\n");
-            }
-        } while (opcao2 < 1 || opcao2 > 4);
-
-        printf("Digite um número decimal inteiro positivo: \n");
-        scanf("%d", &numero);
-
-        if (opcao2 == 1){
-            decimal_para_binario(numero);
-        } else if (opcao2 == 2){
-            decimal_para_octal(numero);
-        } else if (opcao2 == 3){
-            decimal_para_hexadecimal(numero);
-        } else if (opcao2 == 4){
-            decimal_para_bcd(numero);
+        
+        // verificar entrada válida
+        if (scanf("%d", &opcao) != 1) {
+            printf("\nEntrada inválida! Por favor, insira um número.\n");
+            while (getchar() != '\n'); // Limpar buffer
+            opcao = 0;
+            continue;
         }
-    } else if (opcao == 2){
-        int numero;
+        getchar();
 
-        printf("Decimal inteiro: ");
-        scanf("%d", &numero);
-        decimal_para_binario_16(numero);
-    } else if (opcao == 4){
-        printf("Saindo...\n");
-    }
+        if (opcao == 1){
+            int numero, opcao2;
+
+            do {
+                printf("Selecione a conversão:\n"
+                        "1. Binário\n"
+                        "2. Octal\n"
+                        "3. Hexadecimal\n"
+                        "4. Código BCD\n"
+                        "5. Voltar\n");
+                
+                if (scanf("%d", &opcao2) != 1) {
+                    printf("Entrada inválida! Por favor, insira um número.\n");
+                    while (getchar() != '\n');
+                    opcao2 = 0;
+                    continue;
+                }
+                getchar();
+
+                if (opcao2 >= 1 && opcao2 <= 4) {
+                    printf("Digite um número decimal inteiro positivo: ");
+                    if (scanf("%d", &numero) != 1) {
+                        printf("Entrada inválida! Por favor, insira um número inteiro.\n");
+                        while (getchar() != '\n');
+                        continue;
+                    }
+                }
+
+                if (opcao2 == 1){
+                    decimal_para_binario(numero);
+                } else if (opcao2 == 2){
+                    decimal_para_octal(numero);
+                } else if (opcao2 == 3){
+                    decimal_para_hexadecimal(numero);
+                } else if (opcao2 == 4){
+                    decimal_para_bcd(numero);
+                } else if (opcao2 == 5){
+                    printf("Voltando ao menu principal...\n");
+                    break;
+                }
+            } while (opcao2 != 5);
+
+        } else if (opcao == 2){
+            int numero;
+            printf("Decimal inteiro: ");
+            scanf("%d", &numero);
+            decimal_para_binario_16(numero);
+        } else if (opcao == 3){
+            int opcao3;
+            double numero;
+            do {
+                printf("Selecione a conversão:\n"
+                        "1. Float\n"
+                        "2. Double\n");
+                scanf("%d", &opcao3);
+                if (opcao3 < 1 || opcao3 > 2){
+                    printf("Opção inválida. Tente novamente.\n");
+                }
+            } while (opcao3 < 1 || opcao3 > 2);
+
+            printf("Digite um número decimal real: \n");
+            scanf("%lf", &numero);
+
+            if (opcao3 == 1){
+                printf("\nImplementar - decimal para float");
+            } else if (opcao3 == 2){
+                printf("\nImplementar - decimal para double");
+            }
+        } else if (opcao == 4){
+            printf("Saindo...\n");
+        }
+
+    } while (opcao != 4);
 
     return 0;
 }
@@ -312,3 +355,6 @@ void decimal_para_binario_16(int numero){
     }
     printf("\n");
 }
+
+// void decimal_para_float(float numero);
+// void decimal_para_double(double numero);
