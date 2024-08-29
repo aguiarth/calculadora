@@ -166,7 +166,8 @@ void decimal_para_binario(long long int numero) {
 void decimal_para_octal(long long int numero) {
     // apenas valores inteiros positivos
 
-    int resto, i = 0, valorInicial = numero;
+    int resto, i = 0;
+    long long int valorInicial = numero;
     char octal[23]; // 64 bits (22 dígitos + 1 terminador nulo)
 
     // para o decimal 0, o octal é 0
@@ -198,7 +199,8 @@ void decimal_para_octal(long long int numero) {
 
 void decimal_para_hexadecimal(long long int numero) {
     // Função apenas para valores inteiros positivos
-    int resto, i = 0, valorInicial = numero;
+    int resto, i = 0;
+    long long int valorInicial = numero;
     char hexadecimal[17]; // Limite para 64 bits (16 dígitos hexadecimais + 1 bit '/0')
     char caracteresHex[] = "0123456789ABCDEF"; // mapeamento de valores numéricos para caracteres hexadecimais
 
@@ -238,7 +240,7 @@ void decimal_para_hexadecimal(long long int numero) {
 void decimal_para_bcd(long long int numero) {
     // função apenas para valores inteiros positivos
 
-    int valorInicial = numero;
+    long long int valorInicial = numero;
     int digito, digitoOriginal, i;
     char bcd[81]; // limite BCD em sistemas 64 bits (20 dígitos * 4 bits + 1 terminador nulo)
 
