@@ -2,12 +2,10 @@
 #include <string.h>
 #include <stdlib.h>
 
-void decimal_para_binario(long long int numero);
-void decimal_para_octal(long long int numero);
-void decimal_para_hexadecimal(long long int numero);
 void decimal_para_bcd(long long int numero);
 void decimal_para_binario_16(long long int numero);
 void decimal_para_float_double(double numero, int is_double);
+void metodo_da_divisao(long long int numero, int base, char *resultado);
 
 int main(){
 
@@ -61,11 +59,15 @@ int main(){
                 }
 
                 if (opcao1 == 1){
-                    decimal_para_binario(numero);
+                    char binario[65]; // limite em sistemas de 64 bits (64 dígitos bin + terminador nulo)
+                    metodo_da_divisao(numero, 2, binario);
                 } else if (opcao1 == 2){
-                    decimal_para_octal(numero);
+                    char octal[23]; // 64 bits (22 dígitos oct + '/0')
+                    metodo_da_divisao(numero, 8, octal);
                 } else if (opcao1 == 3){
-                    decimal_para_hexadecimal(numero);
+                    char hexadecimal[17]; // 64 bits (16 dígitos hex + '/0')
+                    printf("A base hexadecimal possui 16 possibilidades de valores: 0123456789ABCDEF.\n");
+                    metodo_da_divisao(numero, 16, hexadecimal);
                 } else if (opcao1 == 4){
                     decimal_para_bcd(numero);
                 } else if (opcao1 == 5){
@@ -126,115 +128,41 @@ int main(){
     return 0;
 }
 
-void decimal_para_binario(long long int numero) {
+void metodo_da_divisao(long long int numero, int base, char *resultado) {
     // função apenas para valores inteiros positivos
 
     int resto, i = 0;
     long long int valorInicial = numero;
-    char binario[65]; // limite para sistemas de 64 bits (64 dígitos + terminador nulo)
+    char caracteres[] = "0123456789ABCDEF"; // mapeamento base 16
 
-    // para o decimal 0, o binário é 0
+    // para o decimal 0, o resultado é 0
     if (numero == 0) {
-        binario[i++] = '0';
+        resultado[i++] = '0';
     }
     
-    // método da divisão - conversão decimal para binário
-    printf("\nDivisões sucessivas por 2:\n");
+    // método da divisão - conversão base 10 para outras bases
+    printf("\nDivisões sucessivas por %d:\n", base);
     while (numero > 0) {
-        resto = numero % 2;
-        printf("%lld dividido por 2 = %lld, resto = %d\n", numero, numero / 2, resto);
-        numero /= 2;
-        binario[i++] = resto + '0'; // converter o valor numérico '0' ou '1' em ASCII para representação em string
+        resto = numero % base;
+        printf("%lld dividido por %d = %lld, resto = %d\n", numero, base, numero / base, resto);
+        numero /= base;
+        resultado[i++] = caracteres[resto]; // converter o valor numérico '0' ou '1' em ASCII para representação em string
     }
 
     // finalizar a string
-    binario[i] = '\0';
+    resultado[i] = '\0';
     printf("O resultado é a leitura invertida dos restos.\n");
-    printf("%lld na base 2: ", valorInicial);
+    printf("%lld na base %d: ", valorInicial, base);
 
     // resultado - inverter a string
     for (int j = i - 1; j >= 0; j--) {
-        printf("%c", binario[j]);
+        printf("%c", resultado[j]);
         if ((i - j) % 4 == 0 && j != 0) {
             printf(" ");
         }
     }
     printf("\n");
 
-}
-
-void decimal_para_octal(long long int numero) {
-    // apenas valores inteiros positivos
-
-    int resto, i = 0;
-    long long int valorInicial = numero;
-    char octal[23]; // 64 bits (22 dígitos + 1 terminador nulo)
-
-    // para o decimal 0, o octal é 0
-    if (numero == 0) {
-        octal[i++] = '0';
-    }
-    
-    // método da divisão - conversão decimal para octal
-    printf("Divisões sucessivas por 8:\n");
-    while (numero > 0) {
-        resto = numero % 8;
-        printf("%lld dividido por 8 = %lld, resto = %d\n", numero, numero / 8, resto);
-        numero /= 8;
-        octal[i++] = resto + '0';
-    }
-
-    // finalizar a string
-    octal[i] = '\0';
-    printf("O resultado é a leitura invertida dos restos.\n");
-    printf("Decimal %lld na base 8: ", valorInicial);
-
-    // inverter a string
-    for (int j = i - 1; j >= 0; j--) {
-        printf("%c", octal[j]);
-    }
-    printf("\n");
-
-}
-
-void decimal_para_hexadecimal(long long int numero) {
-    // Função apenas para valores inteiros positivos
-    int resto, i = 0;
-    long long int valorInicial = numero;
-    char hexadecimal[17]; // Limite para 64 bits (16 dígitos hexadecimais + 1 bit '/0')
-    char caracteresHex[] = "0123456789ABCDEF"; // mapeamento de valores numéricos para caracteres hexadecimais
-
-    printf("A base hexadecimal possui 16 possibilidades de valores: 0123456789ABCDEF.\n");
-
-    // decimal 0 = hexadecimal "0"
-    if (numero == 0) {
-        hexadecimal[i++] = '0';
-    }
-
-    printf("Convertendo o decimal %lld para hexadecimal:\n", valorInicial);
-
-    // Método da divisão - conversão decimal para hexadecimal
-    printf("Divisões sucessivas por 16:\n");
-    while (numero > 0) {
-        resto = numero % 16;
-        printf("%lld dividido por 16 = %lld, resto = %d (%c)\n", numero, numero / 16, resto, caracteresHex[resto]);
-        numero /= 16;
-        hexadecimal[i++] = caracteresHex[resto];
-    }
-
-    // Finalizar a string
-    hexadecimal[i] = '\0';
-
-    // Exibir o resultado final
-    printf("O resultado é a leitura invertida dos restos.\n");
-    printf("Decimal %lld na base hexadecimal: ", valorInicial);
-    for (int j = i - 1; j >= 0; j--) {
-        printf("%c", hexadecimal[j]);
-        if ((i - j) % 4 == 0 && j != 0) {
-            printf(" ");
-        }
-    }
-    printf("\n");
 }
 
 void decimal_para_bcd(long long int numero) {
