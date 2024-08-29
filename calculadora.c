@@ -32,7 +32,8 @@ int main(){
         getchar();
 
         if (opcao == 1){
-            int numero, opcao1;
+            int opcao1;
+            long long int numero;
 
             do {
                 printf("Selecione a conversão:\n"
@@ -52,7 +53,7 @@ int main(){
 
                 if (opcao1 >= 1 && opcao1 <= 4) {
                     printf("Digite um número decimal inteiro positivo: ");
-                    if (scanf("%d", &numero) != 1) {
+                    if (scanf("%lld", &numero) != 1) {
                         printf("Entrada inválida! Por favor, insira um número inteiro.\n");
                         while (getchar() != '\n');
                         continue;
@@ -74,9 +75,9 @@ int main(){
             } while (opcao1 != 5);
 
         } else if (opcao == 2){
-            int numero;
+            long long int numero;
             printf("Decimal inteiro: ");
-            scanf("%d", &numero);
+            scanf("%lld", &numero);
             decimal_para_binario_16(numero);
         } else if (opcao == 3){
             int opcao3;
@@ -128,7 +129,8 @@ int main(){
 void decimal_para_binario(long long int numero) {
     // função apenas para valores inteiros positivos
 
-    int resto, i = 0, valorInicial = numero;
+    int resto, i = 0;
+    long long int valorInicial = numero;
     char binario[65]; // limite para sistemas de 64 bits (64 dígitos + terminador nulo)
 
     // para o decimal 0, o binário é 0
@@ -447,7 +449,7 @@ void decimal_para_float_double(double numero, int is_double){
     // 5 - mantissa - 23 bits para float, 52 bits para double
     printf("5. Montar a mantissa - 23 bits para float, 52 bits para double\n");
     int mantissaBits = is_double ? 52 : 23;
-    char mantissa[53];
+    char mantissa[53] = {0};
     strncpy(mantissa, binNormalizado, mantissaBits);
     mantissa[mantissaBits] = '\0';
 
