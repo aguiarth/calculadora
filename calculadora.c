@@ -452,8 +452,17 @@ void decimal_para_float_double(double numero, int is_double){
     printf("5. Montar a mantissa - 23 bits para float, 52 bits para double\n");
     int mantissaBits = is_double ? 52 : 23;
     char mantissa[53] = {0};
-    strncpy(mantissa, binNormalizado, mantissaBits);
-    mantissa[mantissaBits] = '\0';
+    
+    if (binNormalizado[0] == '1') {
+        strncpy(mantissa, binNormalizado + 1, mantissaBits);
+    } else {
+        strncpy(mantissa, binNormalizado, mantissaBits);
+    }
+
+    int mantissaLength = strlen(mantissa);
+    for (int i = mantissaLength; i < mantissaBits; i++) {
+        mantissa[i] = '0';
+    }
 
     // 6 - resultado final = sinal + expoente + mantissa
     printf("6. Resultado final = sinal + expoente + mantissa\n");
