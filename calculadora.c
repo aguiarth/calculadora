@@ -5,6 +5,7 @@ void decimal_para_binario(int numero);
 void decimal_para_octal(int numero);
 void decimal_para_hexadecimal(int numero);
 void decimal_para_bcd(int numero);
+void decimal_para_binario_16(int numero);
 
 int main(){
 
@@ -51,6 +52,12 @@ int main(){
         } else if (opcao2 == 4){
             decimal_para_bcd(numero);
         }
+    } else if (opcao == 2){
+        int numero;
+
+        printf("Decimal inteiro: ");
+        scanf("%d", &numero);
+        decimal_para_binario_16(numero);
     } else if (opcao == 4){
         printf("Saindo...\n");
     }
@@ -171,20 +178,20 @@ void decimal_para_bcd(int numero) {
         numero /= 10;
 
         // 1.1 - converter o dígito para binário de 4 bits
-        char bcd_digito[5] = "";
+        char bcdDigito[5] = "";
         for (i = 3; i >= 0; i--){
-            bcd_digito[i] = (digito % 2) + '0';
+            bcdDigito[i] = (digito % 2) + '0';
             digito /= 2;
         } 
-        bcd_digito[4] = '\0';
+        bcdDigito[4] = '\0';
 
         // 1.2 - exibir o BCD de cada dígito
-        printf("Dígito %d convertido para BCD: %s\n", digitoOriginal, bcd_digito);
+        printf("Dígito %d convertido para BCD: %s\n", digitoOriginal, bcdDigito);
 
         // 1.3 - concatenar os dígitos ao BCD final
-        char temp_bcd[41];
-        snprintf(temp_bcd, sizeof(temp_bcd), "%s %s", bcd_digito, bcd);
-        strcpy(bcd, temp_bcd);
+        char tempBcd[41];
+        snprintf(tempBcd, sizeof(tempBcd), "%s %s", bcdDigito, bcd);
+        strcpy(bcd, tempBcd);
     }
 
     // 2 - remover o espaço extra no início e no final da string BCD
@@ -200,4 +207,97 @@ void decimal_para_bcd(int numero) {
     // 3 - exibir o resultado final
     printf("\nResultado final - %d em BCD: %s\n", valorInicial, bcd);
 
+}
+
+void decimal_para_binario_16(int numero){
+    // Função para converter um decimal para binário com 16 bits
+    unsigned int valor;
+    int i;
+    char binario[17]; // 16 bits + 1 bit para terminador nulo
+
+    printf("\nValor inicial: %d\n", numero);
+
+    // 1 - valor absoluto
+    if (numero < 0){
+        printf("O valor é um decimal inteiro negativo. Vamos calcular o complemento a 2 usando 16 bits:\n");
+        valor = (unsigned int)(-numero);
+
+        // 1.1 - binário do valor absoluto
+        printf("\n1. Converter o valor absoluto para binário: ");
+        for (i = 15; i >= 0; i--){
+            binario[i] = (valor % 2) + '0';
+            valor /= 2;
+        }
+
+        for (i = 0; i < 16; i++) {
+            printf("%c", binario[i]);
+            if ((i + 1) % 4 == 0 && i < 15){
+                printf(" ");
+            }
+        }
+
+        // 1.2 - inverter todos os bits - complemento a 1
+        printf("\n2. Inverter todos os bits (complemento a 1): ");
+        for (i = 0; i < 16; i++){
+            binario[i] = (binario[i] == '0') ? '1' : '0';
+        }
+
+        for (i = 0; i < 16; i++) {
+            printf("%c", binario[i]);
+            if ((i + 1) % 4 == 0 && i < 15){
+                printf(" ");
+            }
+        }
+
+        // 1.3 - adicionar 1 - complemento a 2
+        printf("\n3. Adicionar 1 (complemento a 2): ");
+        for (i = 15; i >= 0; i--){
+            if (binario[i] == '0'){
+                binario[i] = '1';
+                break;
+            } else {
+                binario[i] = '0';
+            }
+        }
+
+        for (i = 0; i < 16; i++) {
+            printf("%c", binario[i]);
+            if ((i + 1) % 4 == 0 && i < 15){
+                printf(" ");
+            }
+        }
+        printf("\n");
+
+    } else {
+        printf("O valor é um decimal inteiro positivo. Basta converter para a base 2 usando 16 bits:\n");
+        valor = (unsigned int)numero;
+        // 3 - binário do número positivo
+        for (i = 15; i >= 0; i--){
+            binario[i] = (valor % 2) + '0';
+            valor /= 2;
+        }
+
+        printf("   Binário: ");
+        for (i = 0; i < 16; i++) {
+            printf("%c", binario[i]);
+            if ((i + 1) % 4 == 0 && i < 15){
+                printf(" ");
+            }
+        }
+        printf("\n");
+
+    }
+    // finalizar a string
+    binario[16] = '\0'; // terminador nulo
+
+    // 4 - exibir o resultado final
+    printf("Decimal %d em binário com 16 bits: ", numero);
+    for (i = 0; i < 16; i++){
+        printf("%c", binario[i]);
+        // espaço a cada 4 bits
+        if ((i + 1) % 4 == 0 && i < 15){
+            printf(" ");
+        }
+    }
+    printf("\n");
 }
