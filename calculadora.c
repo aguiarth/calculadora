@@ -142,7 +142,7 @@ void decimal_para_binario(long long int numero) {
     printf("\nDivisões sucessivas por 2:\n");
     while (numero > 0) {
         resto = numero % 2;
-        printf("%d dividido por 2 = %d, resto = %d\n", numero, numero / 2, resto);
+        printf("%lld dividido por 2 = %lld, resto = %d\n", numero, numero / 2, resto);
         numero /= 2;
         binario[i++] = resto + '0'; // converter o valor numérico '0' ou '1' em ASCII para representação em string
     }
@@ -150,7 +150,7 @@ void decimal_para_binario(long long int numero) {
     // finalizar a string
     binario[i] = '\0';
     printf("O resultado é a leitura invertida dos restos.\n");
-    printf("%d na base 2: ", valorInicial);
+    printf("%lld na base 2: ", valorInicial);
 
     // resultado - inverter a string
     for (int j = i - 1; j >= 0; j--) {
@@ -179,7 +179,7 @@ void decimal_para_octal(long long int numero) {
     printf("Divisões sucessivas por 8:\n");
     while (numero > 0) {
         resto = numero % 8;
-        printf("%d dividido por 8 = %d, resto = %d\n", numero, numero / 8, resto);
+        printf("%lld dividido por 8 = %lld, resto = %d\n", numero, numero / 8, resto);
         numero /= 8;
         octal[i++] = resto + '0';
     }
@@ -187,7 +187,7 @@ void decimal_para_octal(long long int numero) {
     // finalizar a string
     octal[i] = '\0';
     printf("O resultado é a leitura invertida dos restos.\n");
-    printf("Decimal %d na base 8: ", valorInicial);
+    printf("Decimal %lld na base 8: ", valorInicial);
 
     // inverter a string
     for (int j = i - 1; j >= 0; j--) {
@@ -211,13 +211,13 @@ void decimal_para_hexadecimal(long long int numero) {
         hexadecimal[i++] = '0';
     }
 
-    printf("Convertendo o decimal %d para hexadecimal:\n", valorInicial);
+    printf("Convertendo o decimal %lld para hexadecimal:\n", valorInicial);
 
     // Método da divisão - conversão decimal para hexadecimal
-    printf("Divisões sucessivas por 2:\n");
+    printf("Divisões sucessivas por 16:\n");
     while (numero > 0) {
         resto = numero % 16;
-        printf("%d dividido por 16 = %d, resto = %d (%c)\n", numero, numero / 16, resto, caracteresHex[resto]);
+        printf("%lld dividido por 16 = %lld, resto = %d (%c)\n", numero, numero / 16, resto, caracteresHex[resto]);
         numero /= 16;
         hexadecimal[i++] = caracteresHex[resto];
     }
@@ -227,7 +227,7 @@ void decimal_para_hexadecimal(long long int numero) {
 
     // Exibir o resultado final
     printf("O resultado é a leitura invertida dos restos.\n");
-    printf("Decimal %d na base hexadecimal: ", valorInicial);
+    printf("Decimal %lld na base hexadecimal: ", valorInicial);
     for (int j = i - 1; j >= 0; j--) {
         printf("%c", hexadecimal[j]);
         if ((i - j) % 4 == 0 && j != 0) {
@@ -244,7 +244,7 @@ void decimal_para_bcd(long long int numero) {
     int digito, digitoOriginal, i;
     char bcd[81]; // limite BCD em sistemas 64 bits (20 dígitos * 4 bits + 1 terminador nulo)
 
-    printf("Convertendo o decimal %d para BCD:\n", valorInicial);
+    printf("Convertendo o decimal %lld para BCD:\n", valorInicial);
 
     // 1 - converter cada dígito para BCD
     while (numero > 0){
@@ -280,7 +280,7 @@ void decimal_para_bcd(long long int numero) {
     }
 
     // 3 - exibir o resultado final
-    printf("\nResultado final - %d em BCD: %s\n", valorInicial, bcd);
+    printf("\nResultado final - %lld em BCD: %s\n", valorInicial, bcd);
 
 }
 
@@ -290,12 +290,12 @@ void decimal_para_binario_16(long long int numero){
     int i;
     char binario[17]; // 16 bits + 1 bit para terminador nulo
 
-    printf("\nValor inicial: %d\n", numero);
+    printf("\nValor inicial: %lld\n", numero);
 
     // 1 - valor absoluto
     if (numero < 0){
         printf("O valor é um decimal inteiro negativo. Vamos calcular o complemento a 2 usando 16 bits:\n");
-        valor = (unsigned int)(-numero);
+        valor = (unsigned long long int)(-numero);
 
         // 1.1 - binário do valor absoluto
         printf("\n1. Converter o valor absoluto para binário: ");
@@ -345,7 +345,7 @@ void decimal_para_binario_16(long long int numero){
 
     } else {
         printf("O valor é um decimal inteiro positivo. Basta converter para a base 2 usando 16 bits:\n");
-        valor = (unsigned int)numero;
+        valor = (unsigned long long int)numero;
         // 3 - binário do número positivo
         for (i = 15; i >= 0; i--){
             binario[i] = (valor % 2) + '0';
@@ -366,7 +366,7 @@ void decimal_para_binario_16(long long int numero){
     binario[16] = '\0'; // terminador nulo
 
     // 4 - exibir o resultado final
-    printf("Decimal %d em binário com 16 bits: ", numero);
+    printf("Decimal %lld em binário com 16 bits: ", numero);
     for (i = 0; i < 16; i++){
         printf("%c", binario[i]);
         // espaço a cada 4 bits
