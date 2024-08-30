@@ -174,9 +174,9 @@ void metodo_da_divisao(long long int numero, int base, char *resultado) {
     printf("\nDivisões sucessivas por %d:\n", base);
     while (numero > 0) {
         resto = numero % base;
-        printf("%lld dividido por %d = %lld, resto = %d\n", numero, base, numero / base, resto);
+        printf("%lld dividido por %d = %lld, resto = %d (%c)\n", numero, base, numero / base, resto, caracteres[resto]);
         numero /= base;
-        resultado[i++] = caracteres[resto]; // converter o valor numérico '0' ou '1' em ASCII para representação em string
+        resultado[i++] = caracteres[resto];
     }
 
     // finalizar e inverter a string
