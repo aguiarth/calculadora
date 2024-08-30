@@ -2,10 +2,10 @@
 #include <string.h>
 #include <stdlib.h>
 
+void metodo_da_divisao(long long int numero, int base, char *resultado);
 void decimal_para_bcd(long long int numero);
 void decimal_para_binario_16(long long int numero);
 void decimal_para_float_double(double numero, int is_double);
-void metodo_da_divisao(long long int numero, int base, char *resultado);
 
 int main(){
 
@@ -15,7 +15,7 @@ int main(){
         printf("Calculadora didática - conversão entre sistemas numéricos\n"
                 "--------------------\n"
                 "Selecione a opção desejada:\n"
-                "1. Base 10 para bases 2, 8, 16 e código BCD (valores inteiros positivos)\n"
+                "1. Base 10 para bases 2, 8, 16 e código BCD (valores naturais)\n"
                 "2. Base 10 para base 2 com sinal com 16 bits - complemento a 2 (valores inteiros)\n"
                 "3. Base 10 para float e double (valores reais)\n"
                 "4. Sair\n");
@@ -129,7 +129,7 @@ int main(){
 }
 
 void metodo_da_divisao(long long int numero, int base, char *resultado) {
-    // função apenas para valores inteiros positivos
+    // função apenas para números naturais
 
     int resto, i = 0;
     long long int valorInicial = numero;
@@ -149,20 +149,26 @@ void metodo_da_divisao(long long int numero, int base, char *resultado) {
         resultado[i++] = caracteres[resto]; // converter o valor numérico '0' ou '1' em ASCII para representação em string
     }
 
-    // finalizar a string
+    // finalizar e inverter a string
     resultado[i] = '\0';
+
+    for (int j = 0; j < i / 2; j++) {
+        char temp = resultado[j];
+        resultado[j] = resultado[i - j - 1];
+        resultado[i - j - 1] = temp;
+    }
+
+    // resultado
     printf("O resultado é a leitura invertida dos restos.\n");
     printf("%lld na base %d: ", valorInicial, base);
 
-    // resultado - inverter a string
-    for (int j = i - 1; j >= 0; j--) {
+    for (int j = 0; j < i; j++) {
         printf("%c", resultado[j]);
-        if ((i - j) % 4 == 0 && j != 0) {
+        if ((j + 1) % 4 == 0 && j != i - 1) {
             printf(" ");
         }
     }
     printf("\n");
-
 }
 
 void decimal_para_bcd(long long int numero) {
@@ -172,7 +178,8 @@ void decimal_para_bcd(long long int numero) {
     int digito, digitoOriginal, i;
     char bcd[81]; // limite BCD em sistemas 64 bits (20 dígitos * 4 bits + 1 terminador nulo)
 
-    printf("Convertendo o decimal %lld para BCD:\n", valorInicial);
+    printf("Na Codificação Binária Decimal, cada dígito decimal é representado por 4 bits (nibble).\n");
+    printf("%lld em BCD:\n", valorInicial);
 
     // 1 - converter cada dígito para BCD
     while (numero > 0){
@@ -209,7 +216,6 @@ void decimal_para_bcd(long long int numero) {
 
     // 3 - exibir o resultado final
     printf("\nResultado final - %lld em BCD: %s\n", valorInicial, bcd);
-
 }
 
 void decimal_para_binario_16(long long int numero){
@@ -247,7 +253,7 @@ void decimal_para_binario_16(long long int numero){
 
         for (i = 0; i < 16; i++) {
             printf("%c", binario[i]);
-            if ((i + 1) % 4 == 0 && i < 15){
+            if ((15 - i) % 4 == 0 && i < 15){
                 printf(" ");
             }
         }
@@ -265,7 +271,7 @@ void decimal_para_binario_16(long long int numero){
 
         for (i = 0; i < 16; i++) {
             printf("%c", binario[i]);
-            if ((i + 1) % 4 == 0 && i < 15){
+            if ((15 - i) % 4 == 0 && i < 15){
                 printf(" ");
             }
         }
@@ -283,7 +289,7 @@ void decimal_para_binario_16(long long int numero){
         printf("   Binário: ");
         for (i = 0; i < 16; i++) {
             printf("%c", binario[i]);
-            if ((i + 1) % 4 == 0 && i < 15){
+            if ((15 - i) % 4 == 0 && i < 15){
                 printf(" ");
             }
         }
@@ -298,7 +304,7 @@ void decimal_para_binario_16(long long int numero){
     for (i = 0; i < 16; i++){
         printf("%c", binario[i]);
         // espaço a cada 4 bits
-        if ((i + 1) % 4 == 0 && i < 15){
+        if ((15 - i) % 4 == 0 && i < 15){
             printf(" ");
         }
     }
@@ -340,6 +346,7 @@ void decimal_para_float_double(double numero, int is_double){
         }
     }
     binInt[intIndex] = '\0';
+    printf("2.1 Parte inteira em binário: %s\n", binInt);
 
     // 2.2 parte fracionária
     char binFrac[64];
@@ -351,16 +358,16 @@ void decimal_para_float_double(double numero, int is_double){
         parteFracionaria -= bit;
     }
     binFrac[fracIndex] = '\0';
+    printf("2.2 Parte fracionária em binário: %s\n", binFrac);
 
     // 3 - normalizar representação binária
     printf("3. Normalizar a representação binária - número na notação científica (1.mantissa * 2^expoente)\n");
     char binNormalizado[128];
-    int exp = 0; // expoente inicial
+    int exp = 0;
     if (binInt[0] != '0') {
         exp = intIndex - 1; // expoente = índice do último bit da parte inteira menos 1
         snprintf(binNormalizado, sizeof(binNormalizado), "%s%s", binInt, binFrac);
     } else {
-        // contar zeros iniciais na parte fracionária para ajustar o expoente
         int shift = 0;
         while (binFrac[shift] == '0') {
             shift++;
@@ -368,16 +375,19 @@ void decimal_para_float_double(double numero, int is_double){
         exp = -shift - 1;
         snprintf(binNormalizado, sizeof(binNormalizado), "%s", binFrac + shift + 1);
     }
+    printf("Representação binária normalizada: 1.%s * 2^%d\n", binNormalizado, exp);
     printf("Expoente: %d\n", exp);
 
     // 4 - determinar expoente com viés - 127 para float, 1023 para double
     printf("4. Determinar expoente com viés - 127 para float, 1023 para double\n");
     int vies = is_double ? 1023 : 127;
     int expoente = exp + vies;
-    printf("Expoente com viés: %d\n", expoente);
+    printf("Expoente com viés = %d + %d = %d\n", exp, vies, expoente);
+    printf("Esse resultado deve ser convertido para binário.\n");
 
     // 5 - mantissa - 23 bits para float, 52 bits para double
     printf("5. Montar a mantissa - 23 bits para float, 52 bits para double\n");
+    printf("A mantissa é a parte fracionária da representação normalizada:\n");
     int mantissaBits = is_double ? 52 : 23;
     char mantissa[53] = {0};
     
@@ -401,5 +411,4 @@ void decimal_para_float_double(double numero, int is_double){
     }
     printf(")\n");
     printf("Mantissa: %s\n", mantissa);
-
 }
