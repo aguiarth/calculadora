@@ -318,10 +318,10 @@ void decimal_para_float_double(double numero, int is_double){
     if (numero < 0){
         sinal = 1;
         numero = -numero;
-        printf("Valor negativo -> bit de sinal = 1\n");
+        printf("Valor negativo - bit de sinal = 1\n");
     } else {
         sinal = 0;
-        printf("Valor não negativo -> bit de sinal = 0\n");
+        printf("Valor não negativo - bit de sinal = 0\n");
     }
 
     // 2 - Converter a parte inteira e a parte fracionária para binário
