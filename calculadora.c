@@ -1,3 +1,33 @@
+/*
+CC 2024.2 3A - Infraestrutura de Hardware
+Aluna - Thaís Aguiar
+Atividade 30.08.2024 - Calculadora didática de conversão entre sistemas numéricos
+Repositório GitHub - https://github.com/aguiarth/calculadora
+
+Revisões e atualizações:
+0eb8ca1 - 2024-08-30, 15:50 - testes
+37dc3fd - 2024-08-30, 12:57 - Q3 - ajustes e print com espaços
+729fa58 - 2024-08-30, 12:43 - Q3 ajustes
+708516e - 2024-08-29, 23:09 - Q3 andamentos
+834c907 - 2024-08-29, 20:11 - Q1 - simplificando funções
+09c7247 - 2024-08-29, 19:36 - ajustes Q3
+546c36e - 2024-08-29, 16:18 - placeholders long long int
+91017f5 - 2024-08-29, 16:11 - long long int - octal, hexa, BCD
+8edcba5 - 2024-08-29, 16:09 - placeholders para long long int
+06be5cc - 2024-08-29, 16:00 - iniciando Q3 e ajustes nas demais funções (64 bits)
+922061b - 2024-08-29, 14:36 - ajustes menu
+da4c430 - 2024-08-29, 14:36 - ajustes menu
+6eacc30 - 2024-08-28, 21:45 - README
+7568369 - 2024-08-28, 21:36 - Q1 - ajustes nas saídas de dados
+0faae49 - 2024-08-28, 21:17 - Q2 - base 10 para base 2 com 16 bits - complemento a 2
+4c4fe6f - 2024-08-28, 19:13 - Q1 c) e d) - conversão hexadecimal e BCD
+dd2b114 - 2024-08-28, 17:48 - 1 a) e b) no formato didático
+ac6b82b - 2024-08-27, 16:14 - Q1 b) decimal para octal
+1aabc65 - 2024-08-27, 16:01 - Q1 a) - Base 10 para base 2
+f48a6f0 - 2024-08-27, 15:51 - License
+2395d7b - 2024-08-27, 15:48 - README
+*/
+
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
