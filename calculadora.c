@@ -318,10 +318,10 @@ void decimal_para_float_double(double numero, int is_double){
     if (numero < 0){
         sinal = 1;
         numero = -numero;
-        printf("Valor negativo - bit de sinal = 1\n");
+        printf("Valor negativo -> bit de sinal = 1\n");
     } else {
         sinal = 0;
-        printf("Valor não negativo - bit de sinal = 0\n");
+        printf("Valor não negativo -> bit de sinal = 0\n");
     }
 
     // 2 - Converter a parte inteira e a parte fracionária para binário
@@ -401,14 +401,25 @@ void decimal_para_float_double(double numero, int is_double){
     for (int i = mantissaLength; i < mantissaBits; i++) {
         mantissa[i] = '0';
     }
+    mantissa[mantissaBits] = '\0';
+    printf("Mantissa: %s\n", mantissa);
 
     // 6 - resultado final = sinal + expoente + mantissa
     printf("6. Resultado final = sinal + expoente + mantissa\n");
     printf("Sinal: %d\n", sinal);
-    printf("Expoente: %d (em binário: ", expoente);
+    printf("Expoente: ");
     for (int i = (is_double ? 10 : 7); i >= 0; i--) {
         printf("%d", (expoente >> i) & 1);
+        if (i % 4 == 0 && i != 0) {
+            printf(" ");
+        }
     }
-    printf(")\n");
-    printf("Mantissa: %s\n", mantissa);
+    printf("\nMantissa: ");
+    for (int i = 0; i < mantissaBits; i++) {
+        printf("%c", mantissa[i]);
+        if ((i + 1) % 4 == 0 && i != mantissaBits - 1) {
+            printf(" ");
+        }
+    }
+    printf("\n");
 }
