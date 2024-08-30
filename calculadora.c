@@ -5,6 +5,7 @@ Atividade 30.08.2024 - Calculadora didática de conversão entre sistemas numér
 Repositório GitHub - https://github.com/aguiarth/calculadora
 
 Revisões e atualizações:
+14abaaf - 2024-08-30, 17:34 - Q1 - ajuste hex
 0eb8ca1 - 2024-08-30, 15:50 - testes
 37dc3fd - 2024-08-30, 12:57 - Q3 - ajustes e print com espaços
 729fa58 - 2024-08-30, 12:43 - Q3 ajustes
